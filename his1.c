@@ -51,7 +51,11 @@ int main(int argc, char **argv) {
 
 		}
 		close(wd);
-	
+		res = gettimeofday(&tp2, NULL);
+		assert(res == 0);
+		tvalue[j-1] = tp2.tv_sec - tp1.tv_sec + (tp2.tv_usec - tp1.tv_usec) / 1000000.0;
+		printf("%d: Elappsed time is %f.\n", j,1000*tvalue[j-1]);//msec으로 구하기 위해 *1000
+		tsum += tvalue[j - 1];
 
 	}
 	
