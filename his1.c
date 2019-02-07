@@ -56,12 +56,20 @@ int main(int argc, char **argv) {
 		tvalue[j-1] = tp2.tv_sec - tp1.tv_sec + (tp2.tv_usec - tp1.tv_usec) / 1000000.0;
 		printf("%d: Elappsed time is %f.\n", j,1000*tvalue[j-1]);//msec으로 구하기 위해 *1000
 		tsum += tvalue[j - 1];
-
+		/*for (int i = 0; i < 256; i++)
+		{
+			printf("%d ", hisSum[i]);
+		}*/  // 데이터값 출력할때 씀
 	}
 	
 	printf("total time is %f \n", 1000*tsum);//msec으로 구하기 위해 *1000
 	tavg = tsum / (num2 - num1 + 1);
-
+	printf("aver time is %f \n", 1000*tavg);//msec으로 구하기 위해 *1000
+	for (int i = num1-1; i <num2 ; i++) {
+		tdis += (tvalue[i] - tavg)*(tvalue[i] - tavg);
+	}
+	printf("standard deviation is %f \n", 1000*sqrt(tdis / (num2 - num1 + 1)));//msec으로 구하기 위해 *1000
+	return(0);
 }
 
 
