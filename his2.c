@@ -99,6 +99,26 @@ int main(int argc, char **argv) {
 	else if(rem != 0) { // 나머지가 0이 아니면 몇개의 프로세서에는 데이터 파일을 하나씩 더 처리해야한다.  ex)hw2 1 11 10 하나는 2개 처리
 		if (pid == 0) {
 			
+			if(tid<rem){// 하나씩 더 처리해야 하는 프로세서
+					for (int j =num1 ; j <= div +num1 ; j++) {
+						int histogram[256] = { 0 };//개수 
+						sprintf(filename, "data%d.bin", (div+1)*tid+j);// 파일에 대한 수식을 넣고 파일을 만듭니다.
+						fd = open(filename, O_RDWR);
+						assert(fd);
+
+						unsigned char *buffer;
+
+						int size = lseek(fd, 0, SEEK_END);
+						lseek(fd, 0, SEEK_SET);
+						buffer = (unsigned char*)malloc(sizeof(unsigned char)*size);
+						read(fd, buffer, sizeof(unsigned char)*size);
+						
+
+						wd = open("histogram.bin", O_RDWR);
+
+						
+					}
+			}
 			
 			if (rem<=tid) {// 몫 만큼 처리해도되는 프로세서
 				
