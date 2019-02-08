@@ -112,7 +112,10 @@ int main(int argc, char **argv) {
 						lseek(fd, 0, SEEK_SET);
 						buffer = (unsigned char*)malloc(sizeof(unsigned char)*size);
 						read(fd, buffer, sizeof(unsigned char)*size);
-						
+						for (int i = 0; i < size; i++) {
+
+							histogram[buffer[i]]++;
+						}
 
 						wd = open("histogram.bin", O_RDWR);
 
