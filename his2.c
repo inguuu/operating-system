@@ -124,6 +124,16 @@ int main(int argc, char **argv) {
 						read(wd, &hisSum, 1024);
 						lseek(wd, 0, SEEK_SET);
 
+						for (int i = 0; i < 256; i++) {
+
+							assert(wd);
+							hisSum[i] += histogram[i];
+							write(wd, &hisSum[i], sizeof(int));
+							
+						}
+						lockf(wd, F_ULOCK, 1024);
+						lseek(wd, 0, SEEK_SET);
+						close(wd);
 					}
 			}
 			
