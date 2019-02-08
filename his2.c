@@ -54,7 +54,9 @@ int main(int argc, char **argv) {
 
 	if(pid==0)
 	//printf("%d pid num\n", getpid());
-	
+	if (rem == 0) {// 나머지가 없으면 모든 프로세서가 몫만크만 처리하면 된다. ex)hw2 1 100 10
+		
+	}
 	
 	for (int i = 1; i <= num3; i++) {
 		wait(&status);
