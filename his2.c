@@ -138,7 +138,39 @@ int main(int argc, char **argv) {
 			}
 			
 			if (rem<=tid) {// 몫 만큼 처리해도되는 프로세서
-				
+				for (int j = num1; j < div+num1 ; j++) {
+					int histogram[256] = { 0 };//개수 
+					
+					sprintf(filename, "data%d.bin", (div+1)*rem+(tid-rem)*div+j);// 파일에 대한 수식을 넣고 파일을 만듭니다.
+					fd = open(filename, O_RDWR);
+					assert(fd);
+
+					unsigned char *buffer;
+
+					int size = lseek(fd, 0, SEEK_END);
+					lseek(fd, 0, SEEK_SET);
+					buffer = (unsigned char*)malloc(sizeof(unsigned char)*size);
+					read(fd, buffer, sizeof(unsigned char)*size);
+					for (int i = 0; i < size; i++) {
+						histogram[buffer[i]]++;
+					}
+					wd = open("histogram.bin", O_RDWR);
+					lockf(wd, F_LOCK, 1024);
+					lseek(wd, 0, SEEK_SET);
+					read(wd, &hisSum, 1024);
+					lseek(wd, 0, SEEK_SET);
+					for (int i = 0; i < 256; i++) {
+
+						assert(wd);
+						hisSum[i] += histogram[i];
+						write(wd, &hisSum[i], sizeof(int));
+						
+					}
+					lockf(wd, F_ULOCK, 1024);
+					lseek(wd, 0, SEEK_SET);
+					close(wd);
+				}
+
 			}
 			res = gettimeofday(&tp4, NULL);
 			tvalue2= tvalue = tp4.tv_sec - tp3.tv_sec + (tp4.tv_usec - tp3.tv_usec) / 1000000.0;
