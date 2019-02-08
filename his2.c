@@ -97,7 +97,17 @@ int main(int argc, char **argv) {
 		}
 	}
 	else if(rem != 0) { // 나머지가 0이 아니면 몇개의 프로세서에는 데이터 파일을 하나씩 더 처리해야한다.  ex)hw2 1 11 10 하나는 2개 처리
-		
+		if (pid == 0) {
+			
+			
+			if (rem<=tid) {// 몫 만큼 처리해도되는 프로세서
+				
+			}
+			res = gettimeofday(&tp4, NULL);
+			tvalue2= tvalue = tp4.tv_sec - tp3.tv_sec + (tp4.tv_usec - tp3.tv_usec) / 1000000.0;
+			printf("Child Process tid: %d Elappsed time is %f.\n", tid,1000 * tvalue);
+			exit(0);
+		}
 	}
 	for (int i = 1; i <= num3; i++) {
 		wait(&status);
