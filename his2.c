@@ -96,7 +96,9 @@ int main(int argc, char **argv) {
 			exit(0);
 		}
 	}
-	
+	else if(rem != 0) { // 나머지가 0이 아니면 몇개의 프로세서에는 데이터 파일을 하나씩 더 처리해야한다.  ex)hw2 1 11 10 하나는 2개 처리
+		
+	}
 	for (int i = 1; i <= num3; i++) {
 		wait(&status);
 		if (i == num3) {
