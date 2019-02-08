@@ -55,7 +55,46 @@ int main(int argc, char **argv) {
 	if(pid==0)
 	//printf("%d pid num\n", getpid());
 	if (rem == 0) {// 나머지가 없으면 모든 프로세서가 몫만크만 처리하면 된다. ex)hw2 1 100 10
-		
+		if (pid == 0) {
+			
+				for (int j = num1; j < div+num1; j++) {
+					int histogram[256] = { 0 };//개수 
+					sprintf(filename, "data%d.bin", j+div*tid ); // 파일명을 만듭니다
+					fd = open(filename, O_RDWR);
+					assert(fd);
+					
+					
+					
+					int size= lseek(fd, 0, SEEK_END);
+					lseek(fd, 0, SEEK_SET);
+					unsigned char *buffer;
+					buffer = (unsigned char*)malloc(sizeof(unsigned char)*size);
+					read(fd, buffer, sizeof(unsigned char)*size);
+
+					for (int i = 0; i < size; i++) {
+						
+						histogram[buffer[i]]++;
+					}
+
+					wd = open("histogram.bin", O_RDWR);
+					lockf(wd, F_LOCK, 1024);
+					lseek(wd, 0, SEEK_SET);
+					read(wd, &hisSum, 1024);
+					lseek(wd, 0, SEEK_SET);
+					for (int i = 0; i < 256; i++) {
+       					assert(wd);
+						hisSum[i] += histogram[i];
+					    write(wd, &hisSum[i], sizeof(int));
+					}
+					lockf(wd, F_ULOCK, 1024);
+					lseek(wd, 0, SEEK_SET);
+					close(wd);
+			}		
+				res = gettimeofday(&tp4, NULL);
+				tvalue2 = tvalue = tp4.tv_sec - tp3.tv_sec + (tp4.tv_usec - tp3.tv_usec) / 1000000.0;
+				printf("Child Process tid: %d Elappsed time is %f.\n", tid,1000 * tvalue);
+			exit(0);
+		}
 	}
 	
 	for (int i = 1; i <= num3; i++) {
