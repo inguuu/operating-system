@@ -119,7 +119,11 @@ int main(int argc, char **argv) {
 
 						wd = open("histogram.bin", O_RDWR);
 
-						
+						lockf(wd, F_LOCK, 1024);
+						lseek(wd, 0, SEEK_SET);
+						read(wd, &hisSum, 1024);
+						lseek(wd, 0, SEEK_SET);
+
 					}
 			}
 			
