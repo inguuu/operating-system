@@ -75,6 +75,9 @@ int main(int argc, char *argv[])
 	sem_init(&mutex, 0, 1);
 	sem_init(&mutexhistogram, 0, 1);
 
+	wthread td[tdnum];
+	pthread_t *thread;
+	thread = malloc(sizeof(pthread_t)*tdnum);
 
 	
 
