@@ -79,6 +79,25 @@ int main(int argc, char *argv[])
 	pthread_t *thread;
 	thread = malloc(sizeof(pthread_t)*tdnum);
 
-	
+	for (int i = 0; i < tdnum; i++){
+		td[i].buf = bufsize;
+		td[i].id = i + 1;
+	    create = pthread_create(&thread[i], NULL, histogramize, (void *)&td[i]);
+	}
+	for (int j = num1; j < num2+1; j++){
+		sem_wait(&empty);
+		sem_wait(&mutex);
+		buffers[in] = j;
+		in = (in + 1) % bufsize;
+		sem_post(&mutex);
+		sem_post(&full);
+	}
+
+	int fd2 = open("histogram.bin", O_RDWR);
+	if (fd2 == -1){
+		printf("file don't exist\n");
+		return 0;
+	}
+
 
 }
