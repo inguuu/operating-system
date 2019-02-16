@@ -56,7 +56,22 @@ void *histogramize(void * thd2)
 		sem_post(&empty);
 
 
+		sem_wait(&mutexhistogram);
+		//printf("%d\n", stop);
+		if (stop > 0) {
+			for (int k = 0; k < fileSize; k++)
+			{
+				histogram[buf[k]]++;
+			}
+			stop--;
+		}
 		
+		sem_post(&mutexhistogram);
+	}
+	
+	res = gettimeofday(&tp2, NULL);
+	ntvalue = (tp2.tv_sec - tp1.tv_sec + ((tp2.tv_usec - tp1.tv_usec) / 1000000.0)) * 1000.0;
+	thd->tvalue = ntvalue;
 }
 
 int main(int argc, char *argv[])
