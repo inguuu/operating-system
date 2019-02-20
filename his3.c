@@ -55,6 +55,14 @@ void *histogramize(void * thd2)
 		sem_post(&mutex);
 		sem_post(&empty);
 
+		char name[20];
+		sprintf(name, "data%d.bin", data);
+		int fd = open(name, O_RDONLY);
+		assert(fd);
+		int fileSize = lseek(fd, 0, SEEK_END);
+		lseek(fd, -fileSize, SEEK_CUR);
+		unsigned char *buf = (unsigned char *)malloc(sizeof(unsigned char)*fileSize);
+		read(fd, buf, sizeof(unsigned char)*fileSize);
 
 		sem_wait(&mutexhistogram);
 		//printf("%d\n", stop);
