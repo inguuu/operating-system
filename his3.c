@@ -131,12 +131,21 @@ int main(int argc, char *argv[])
 		sem_post(&mutex);
 		sem_post(&full);
 	}
+	for (int k = 0; k < tdnum; k++)	{
+		pthread_join(thread[k], NULL);
+		printf("thread id: %d = Elappsed time : %f(ms)\n", td[k].id, (float)td[k].tvalue);
 
+	}
 	int fd2 = open("histogram.bin", O_RDWR);
 	if (fd2 == -1){
 		printf("file don't exist\n");
 		return 0;
 	}
+	write(fd2, &histogram, sizeof(int) * 256);
+	close(fd2); 
+	res = gettimeofday(&tp4, NULL);
 
+	totaltvalue = (tp4.tv_sec - tp3.tv_sec + ((tp4.tv_usec - tp3.tv_usec) / 1000000.0)) * 1000.0;
+	printf("total Elappsed time: %f(ms)\n", totaltvalue);
 
 }
