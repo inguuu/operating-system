@@ -91,6 +91,22 @@ int main(int argc, char *argv[])
 	int bufsize;
 	int create;
 	stop = num2 - num1+1;
+	
+	if (argv[3] == NULL)
+	{
+		tdnum = 1;
+		bufsize = 1;
+	}
+	else if (argv[3] != NULL && argv[4] == NULL)
+	{
+		tdnum = atoi(argv[3]);
+		bufsize = 1;
+	}
+	else
+	{
+		tdnum = atoi(argv[3]);
+		bufsize = atoi(argv[4]);
+	}
 
 	buffers = (int *)malloc(sizeof(int)*bufsize);
 	sem_init(&full, 0, 0);
